@@ -31,14 +31,7 @@ app.get("/locations", async (req, res) => {
         ip_addr: { S: ip_1 },
       },
     };
-    // const result = await ddb.getItem(getParam).promise();
-
-    var result;
-    ddb
-      .getItem(getParam)
-      .promise()
-      .then((data, error) => (result = data))
-      .then(console.log(result));
+    const result = await ddb.getItem(getParam).promise();
 
     if (typeof result.Item != "undefined") {
       var params = {
