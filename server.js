@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const AWS = require("aws-sdk");
+const { response } = require("express");
 
 // connect to dynamoDB
 AWS.config.update({ region: "us-east-1" });
@@ -30,8 +31,12 @@ app.get("/locations", async (req, res) => {
         ip_addr: { S: ip_1 },
       },
     };
-    var result = await ddb.getItem(getParam).promise();
+    const result = await ddb.getItem(getParam).promise();
+    result.then((response) => {
+      return response;
+    });
     // console.log(JSON.stringify(result));
+
     if (typeof result.Item != "undefined") {
       var params = {
         TableName: "esri_demo",
