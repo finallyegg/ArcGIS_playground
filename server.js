@@ -59,6 +59,7 @@ app.get("/locations", async (req, res) => {
           console.log("Success", data);
         }
       });
+      res.status(201).json("Success Update!");
     } else {
       const ipres = await axios.get(url);
       // console.log(ipres);
