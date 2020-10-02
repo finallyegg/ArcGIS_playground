@@ -37,7 +37,7 @@ app.get("/locations", async (req, res) => {
       var params = {
         TableName: "esri_demo",
         Key: {
-          VisitorCount: { N: String(result.Item.VisitorCount + 1) },
+          VisitorCount: { N: String(result.Item.VisitorCount.N + 1) },
           LastVisitTime: { N: String(Date.now()) },
         },
       };
