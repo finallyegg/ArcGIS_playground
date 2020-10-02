@@ -29,7 +29,6 @@ app.get("/locations", async (req, res) => {
       Key: {
         ip_addr: { S: ip_1 },
       },
-      ProjectionExpression: "ATTRIBUTE_NAME",
     };
     var result = await ddb.getItem(getParam).promise();
     console.log(JSON.stringify(result));
