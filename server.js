@@ -36,9 +36,21 @@ app.get("/locations", async (req, res) => {
     if (typeof result.Item != "undefined") {
       var params = {
         TableName: "esri_demo",
+        ExpressionAttributeNames: {
+          "#VC": "VisitorCount",
+          "#LV": "LastVisitTime",
+        },
+        ExpressionAttributeValues: {
+          ":vc": {
+            S: String(result.Item.VisitorCount.N + 1),
+          },
+          ":lv": {
+            N: String(Date.now()),
+          },
+        },
+        UpdateExpression: "SET #VC = :vc, #LV = :lv",
         Key: {
-          VisitorCount: { N: String(result.Item.VisitorCount.N + 1) },
-          LastVisitTime: { N: String(Date.now()) },
+          ip_addr: { S: ip_1 },
         },
       };
       ddb.updateItem(params, function (err, data) {
