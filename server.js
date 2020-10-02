@@ -27,7 +27,7 @@ app.get("/locations", async (req, res) => {
     var getParam = {
       TableName: "esri_demp",
       Key: {
-        ip_addr: { N: ip_1 },
+        ip_addr: { S: ip_1 },
       },
       ProjectionExpression: "ATTRIBUTE_NAME",
     };
