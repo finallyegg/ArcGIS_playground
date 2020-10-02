@@ -33,42 +33,51 @@ app.get("/locations", async (req, res) => {
     var result = await ddb.getItem(getParam).promise();
     // console.log(JSON.stringify(result));
     console.log(typeof result.Item);
-    // data = await ddb.getItem(getParam, function (err, data) {
-    //   if (err) {
-    //     console.log("Error", err);
-    //   } else {
-    //     console.log("Success_Read", data.Item);
-    //   }
-    // });
-
     console.log(result);
+    if (typeof result.Item != null) {
+      var params = {
+        TableName: "esri_demp",
+        Item: {
+          VisitorCount: { N: result.Item.VisitorCount + 1 },
+          LastVisitTime: { N: Date.now() },
+        },
+      };
+      ddb.updateItem(params, function (err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data);
+        }
+      });
+    } else {
+      const ipres = await axios.get(url);
+      // console.log(ipres);
+      loc = ipres.data.loc;
+      lat = loc.split(",")[0];
+      long = loc.split(",")[1];
+      // Call DynamoDB to add the item to the table
+      var params = {
+        TableName: "esri_demp",
+        Item: {
+          ip_addr: { S: ip_1 },
+          ISP: { S: ipres.data.org },
+          VisitorCount: { N: "1" },
+          Lat: { N: lat },
+          Long: { N: long },
 
-    const ipres = await axios.get(url);
-    // console.log(ipres);
-    loc = ipres.data.loc;
-    lat = loc.split(",")[0];
-    long = loc.split(",")[1];
-    // Call DynamoDB to add the item to the table
-    var params = {
-      TableName: "esri_demp",
-      Item: {
-        ip_addr: { S: ip_1 },
-        ISP: { S: ipres.data.org },
-        VisitorCount: { N: "1" },
-        Lat: { N: lat },
-        Long: { N: long },
-        LastVisitTime: { N: "1" },
-      },
-    };
+          LastVisitTime: { N: Date.now() },
+        },
+      };
 
-    ddb.putItem(params, function (err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success", data);
-      }
-    });
-    res.status(200).json("Success!");
+      ddb.putItem(params, function (err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data);
+        }
+      });
+      res.status(200).json("Success!");
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal Service Error");
