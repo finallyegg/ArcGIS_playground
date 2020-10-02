@@ -34,7 +34,7 @@ app.get("/locations", async (req, res) => {
     var params = {
       TableName: "esri_demp",
       Item: {
-        ip_addr: { N: ip_1 },
+        ip_addr: { S: ip_1 },
         ISP: { S: ipres.data.org },
         VisitorCount: { N: "1" },
         Lat: { N: lat },
