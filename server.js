@@ -37,9 +37,8 @@ app.get("/locations", async (req, res) => {
     ddb
       .getItem(getParam)
       .promise()
-      .then((data, error) => (result = data));
-
-    console.log(result);
+      .then((data, error) => (result = data))
+      .then(console.log(result));
 
     if (typeof result.Item != "undefined") {
       var params = {
