@@ -31,16 +31,18 @@ app.get("/locations", async (req, res) => {
       },
       ProjectionExpression: "ATTRIBUTE_NAME",
     };
+    var result = await dynamodb.getItem(getParam).promise();
+    console.log(JSON.stringify(result));
 
-    data = await ddb.getItem(getParam, function (err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success", data.Item);
-      }
-    });
+    // data = await ddb.getItem(getParam, function (err, data) {
+    //   if (err) {
+    //     console.log("Error", err);
+    //   } else {
+    //     console.log("Success_Read", data.Item);
+    //   }
+    // });
 
-    console.log(data);
+    console.log(result);
 
     const ipres = await axios.get(url);
     // console.log(ipres);
