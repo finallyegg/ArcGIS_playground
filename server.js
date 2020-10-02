@@ -33,9 +33,7 @@ app.get("/locations", async (req, res) => {
     var result = await ddb.getItem(getParam).promise();
     // console.log(JSON.stringify(result));
     console.log(typeof result.Item);
-    if (typeof result.Item != undefined) {
-      console.log(typeof result.Item);
-
+    if (typeof result.Item != "undefined") {
       var params = {
         TableName: "esri_demp",
         Key: {
