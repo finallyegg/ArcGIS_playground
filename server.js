@@ -34,7 +34,7 @@ app.get("/locations", async (req, res) => {
     // console.log(JSON.stringify(result));
     console.log(typeof result.Item);
     console.log(result);
-    if (typeof result.Item != null) {
+    if (typeof result.Item != undefined) {
       var params = {
         TableName: "esri_demp",
         Key: {
@@ -64,7 +64,6 @@ app.get("/locations", async (req, res) => {
           VisitorCount: { N: "1" },
           Lat: { N: lat },
           Long: { N: long },
-
           LastVisitTime: { N: Date.now() },
         },
       };
