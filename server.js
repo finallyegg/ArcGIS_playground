@@ -8,6 +8,9 @@ AWS.config.update({ region: "us-east-1" });
 var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
 const app = express();
+var cors = require("cors");
+
+app.use(cors());
 
 app.set("trust proxy", true);
 
