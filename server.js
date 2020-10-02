@@ -37,7 +37,7 @@ app.get("/locations", async (req, res) => {
     if (typeof result.Item != null) {
       var params = {
         TableName: "esri_demp",
-        Item: {
+        Key: {
           VisitorCount: { N: result.Item.VisitorCount + 1 },
           LastVisitTime: { N: Date.now() },
         },
