@@ -11,7 +11,7 @@ app.get("/", (_, res) => {
 
 app.get("/locations", (req, res) => {
   var ip = req.headers["x-forwarded-for"] || req.connection.localAddress;
-  var ip_1 = req.ip;
+  var ip_1 = req.ip.replace("::ffff:", "");
 
   r = { ip: ip, ip_1: ip_1 };
   //   var str = "hello";
