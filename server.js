@@ -32,7 +32,7 @@ app.get("/locations", async (req, res) => {
     };
     var result = await ddb.getItem(getParam).promise();
     // console.log(JSON.stringify(result));
-    console.log(result.Item.length());
+    console.log(typeof result.Item);
     // data = await ddb.getItem(getParam, function (err, data) {
     //   if (err) {
     //     console.log("Error", err);
