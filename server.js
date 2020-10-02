@@ -38,7 +38,7 @@ app.get("/locations", async (req, res) => {
         TableName: "esri_demo",
         Key: {
           VisitorCount: { N: result.Item.VisitorCount + 1 },
-          LastVisitTime: { N: Date.now() },
+          LastVisitTime: { N: Int(Date.now()) },
         },
       };
       ddb.updateItem(params, function (err, data) {
@@ -63,7 +63,7 @@ app.get("/locations", async (req, res) => {
           VisitorCount: { N: "1" },
           Lat: { N: lat },
           Long: { N: long },
-          LastVisitTime: { N: Date.now() },
+          LastVisitTime: { N: Int(Date.now()) },
         },
       };
 
