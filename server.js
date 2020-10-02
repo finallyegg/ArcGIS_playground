@@ -9,13 +9,18 @@ app.get("/", (_, res) => {
   res.json(str);
 });
 
-app.get("/locations", (req, res) => {
-  var ip = req.headers["x-forwarded-for"] || req.connection.localAddress;
-  var ip_1 = req.ip.replace("::ffff:", "");
+app.get("/locations", async (req, res) => {
+  //   var ip = req.headers["x-forwarded-for"] || req.connection.localAddress;
+  const ip_1 = req.ip.replace("::ffff:", "");
 
-  r = { ip: ip, ip_1: ip_1 };
-  //   var str = "hello";
-  res.json(r);
+  const token = "bf659e5b6f895e";
+  const url = "http://ipinfo.io/";
+  const ipres = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    body: ip_1,
+  });
+  res.json(ipres);
 });
 
 const port = 5000;
