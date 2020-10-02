@@ -31,7 +31,7 @@ app.get("/locations", async (req, res) => {
       },
       ProjectionExpression: "ATTRIBUTE_NAME",
     };
-    var result = await dynamodb.getItem(getParam).promise();
+    var result = await ddb.getItem(getParam).promise();
     console.log(JSON.stringify(result));
 
     // data = await ddb.getItem(getParam, function (err, data) {
