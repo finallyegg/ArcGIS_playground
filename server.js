@@ -25,7 +25,7 @@ app.get("/locations", async (req, res) => {
     url = "http://ipinfo.io/" + ip_1 + "?token=" + token;
 
     var getParam = {
-      TableName: "esri_demp",
+      TableName: "esri_demo",
       Key: {
         ip_addr: { S: ip_1 },
       },
@@ -35,7 +35,7 @@ app.get("/locations", async (req, res) => {
     console.log(typeof result.Item);
     if (typeof result.Item != "undefined") {
       var params = {
-        TableName: "esri_demp",
+        TableName: "esri_demo",
         Key: {
           VisitorCount: { N: result.Item.VisitorCount + 1 },
           LastVisitTime: { N: Date.now() },
@@ -56,7 +56,7 @@ app.get("/locations", async (req, res) => {
       long = loc.split(",")[1];
       // Call DynamoDB to add the item to the table
       var params = {
-        TableName: "esri_demp",
+        TableName: "esri_demo",
         Item: {
           ip_addr: { S: ip_1 },
           ISP: { S: ipres.data.org },
