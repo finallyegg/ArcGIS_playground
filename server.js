@@ -54,7 +54,7 @@ app.get("/send_location", async (req, res) => {
         },
         ExpressionAttributeValues: {
           ":vc": {
-            S: String(Number(result.Item.VisitorCount.N) + 1),
+            N: String(Number(result.Item.VisitorCount.N) + 1),
           },
           ":lv": {
             N: String(Date.now()),
