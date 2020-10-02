@@ -16,7 +16,19 @@ app.get("/", (_, res) => {
   res.json(str);
 });
 
-app.get("/locations", async (req, res) => {
+app.get("/locations", (_, res) => {
+  scan_parm = {
+    TableName: "esri_demo",
+  };
+  ddb.scan(scan_parm, (err, data) => {
+    if (err) console.log(err, err.stack);
+    // an error occurred
+    else console.log(data); // successful response
+    res.json(str);
+  });
+});
+
+app.get("/send_location", async (req, res) => {
   //   var ip = req.headers["x-forwarded-for"] || req.connection.localAddress;
   const ip_1 = req.ip.replace("::ffff:", "");
   var url = "";
