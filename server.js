@@ -31,7 +31,20 @@ app.get("/locations", async (req, res) => {
         ip_addr: { S: ip_1 },
       },
     };
-    const result = await ddb.getItem(getParam).promise();
+    // const result = await ddb.getItem(getParam).promise();
+
+    const result = new Promise((resolve, reject) => {
+      var re = ddb.getItem(getParam, function (res) {
+        res.setEncoding("utf8");
+        res.on("data", (chunk) => {
+          resolve(chunk);
+        });
+        res.on("error", (err) => {
+          reject(err);
+        });
+      });
+      return result;
+    });
     result.then((response) => {
       return response;
     });
