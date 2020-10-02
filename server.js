@@ -24,9 +24,26 @@ app.get("/locations", async (req, res) => {
     const token = "bf659e5b6f895e";
     url = "http://ipinfo.io/" + ip_1 + "?token=" + token;
 
+    var getParam = {
+      TableName: "esri_demp",
+      Key: {
+        ip_addr: { N: ip_1 },
+      },
+      ProjectionExpression: "ATTRIBUTE_NAME",
+    };
+
+    data = await ddb.getItem(getParam, function (err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success", data.Item);
+      }
+    });
+
+    console.log(data);
+
     const ipres = await axios.get(url);
-    console.log(ipres);
-    res.json(ipres.data);
+    // console.log(ipres);
     loc = ipres.data.loc;
     lat = loc.split(",")[0];
     long = loc.split(",")[1];
@@ -50,6 +67,7 @@ app.get("/locations", async (req, res) => {
         console.log("Success", data);
       }
     });
+    res.status(200).json("Success!");
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal Service Error");
